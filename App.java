@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class AppDemo {
+public class App {
 
     private static List<Carro> carros = new ArrayList<>();
     private static List<Cliente> clientes = new ArrayList<>();

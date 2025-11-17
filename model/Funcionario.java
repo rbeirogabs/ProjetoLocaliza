@@ -1,27 +1,53 @@
 package model;
 
-public class Funcionario {
+public class Funcionario extends EntidadeBase {
 
     private String nome;
     private String cpf;
     private String cargo;
     private String departamento;
     private String telefone;
+    private double salario;
 
     public Funcionario() {
+        super();
     }
 
     public Funcionario(String nome, String cargo) {
+        super();
         this.nome = nome;
         this.cargo = cargo;
     }
 
     public Funcionario(String nome, String cpf, String cargo, String departamento, String telefone) {
+        super();
         this.nome = nome;
         this.cpf = cpf;
         this.cargo = cargo;
         this.departamento = departamento;
         this.telefone = telefone;
+    }
+
+    public Funcionario(int id, String nome, String cpf, String cargo, String departamento, 
+                      String telefone, double salario) {
+        super();
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.cargo = cargo;
+        this.departamento = departamento;
+        this.telefone = telefone;
+        this.salario = salario;
+    }
+
+    @Override
+    public String obterDescricao() {
+        return "Funcionario{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cargo='" + cargo + '\'' +
+                ", departamento='" + departamento + '\'' +
+                '}';
     }
 
     public String getNome() {
@@ -64,12 +90,24 @@ public class Funcionario {
         this.telefone = telefone;
     }
 
-    public void gerarRelatorio() {
-        System.out.println("Relatório gerado pelo funcionário " + nome);
+    public double getSalario() {
+        return salario;
+    }
+
+    public void setSalario(double salario) {
+        this.salario = salario;
     }
 
     @Override
     public String toString() {
-        return "Funcionario: " + nome + " | Cargo: " + cargo + " | Departamento: " + departamento;
+        return "Funcionario{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", cargo='" + cargo + '\'' +
+                ", departamento='" + departamento + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", salario=" + salario +
+                '}';
     }
 }

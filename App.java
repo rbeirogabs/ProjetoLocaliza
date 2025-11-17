@@ -1,20 +1,21 @@
 import model.*;
+import services.*;
+import repositories.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class App {
 
-    private static List<Carro> carros = new ArrayList<>();
-    private static List<Cliente> clientes = new ArrayList<>();
-    private static List<Aluguel> alugueis = new ArrayList<>();
-    private static List<Funcionario> funcionarios = new ArrayList<>();
-    private static List<Pagamento> pagamentos = new ArrayList<>();
-    private static List<Seguro> seguros = new ArrayList<>();
-    private static List<Manutencao> manutencoes = new ArrayList<>();
+    private static ClienteServico clienteServico;
+    private static CarroServico carroServico;
+    private static AluguelServico aluguelServico;
+    private static FuncionarioServico funcionarioServico;
+    private static PagamentoServico pagamentoServico;
+    private static SeguroServico seguroServico;
+    private static ManutencaoServico manutencaoServico;
     
-    private static Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner;
 
     public static void main(String[] args) {
         inicializarDados();

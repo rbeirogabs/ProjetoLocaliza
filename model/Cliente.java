@@ -1,6 +1,6 @@
 package model;
 
-public class Cliente {
+public class Cliente extends EntidadeBase {
 
     private String nome;
     private String cnh;
@@ -10,20 +10,44 @@ public class Cliente {
     private String genero;
 
     public Cliente() {
+        super();
     }
 
     public Cliente(String nome, String cpf) {
+        super();
         this.nome = nome;
         this.cpf = cpf;
     }
 
     public Cliente(String nome, String cnh, String cpf, String telefone, String email, String genero) {
+        super();
         this.nome = nome;
         this.cnh = cnh;
         this.cpf = cpf;
         this.telefone = telefone;
         this.email = email;
         this.genero = genero;
+    }
+
+    public Cliente(int id, String nome, String cnh, String cpf, String telefone, String email, String genero) {
+        super();
+        this.id = id;
+        this.nome = nome;
+        this.cnh = cnh;
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.email = email;
+        this.genero = genero;
+    }
+
+    @Override
+    public String obterDescricao() {
+        return "Cliente{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 
     public String getNome() {
@@ -74,28 +98,16 @@ public class Cliente {
         this.genero = genero;
     }
 
-    public void fazerReserva() {
-        System.out.println(nome + " fez uma reserva.");
-    }
-
-    public void cancelarReserva() {
-        System.out.println(nome + " cancelou a reserva.");
-    }
-
-    public void avaliarCarro(Carro carro, String avaliacao) {
-        System.out.println(nome + " avaliou o carro " + carro.getModelo() + ": " + avaliacao);
-    }
-
-    public void trocarCarro(Carro carroAntigo, Carro carroNovo) {
-        System.out.println(nome + " trocou o carro " + carroAntigo.getModelo() + " para " + carroNovo.getModelo());
-    }
-
-    public void adicionarPreferencia(String preferencia) {
-        System.out.println(nome + " adicionou preferência: " + preferencia);
-    }
-
     @Override
     public String toString() {
-        return "Cliente: " + nome + " | CPF: " + cpf + " | CNH: " + cnh;
+        return "Cliente{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cnh='" + cnh + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", email='" + email + '\'' +
+                ", genero='" + genero + '\'' +
+                '}';
     }
 }

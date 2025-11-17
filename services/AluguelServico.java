@@ -1,8 +1,6 @@
 package services;
 
 import model.Aluguel;
-import model.Cliente;
-import model.Carro;
 import repositories.AluguelRepositorio;
 import interfaces.IServico;
 import java.util.ArrayList;

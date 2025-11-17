@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDate;
 
-public class Seguro {
+public class Seguro extends EntidadeBase {
 
     private String codigo;
     private String tipo;
@@ -14,9 +14,11 @@ public class Seguro {
     private String status;
 
     public Seguro() {
+        super();
     }
 
     public Seguro(String codigo, String tipo, Carro carro) {
+        super();
         this.codigo = codigo;
         this.tipo = tipo;
         this.carro = carro;
@@ -24,6 +26,7 @@ public class Seguro {
     }
 
     public Seguro(String codigo, String tipo, Carro carro, Cliente beneficiario, double valor, LocalDate inicio, LocalDate termino) {
+        super();
         this.codigo = codigo;
         this.tipo = tipo;
         this.beneficiario = beneficiario;
@@ -32,6 +35,16 @@ public class Seguro {
         this.inicio = inicio;
         this.termino = termino;
         this.status = "Ativo";
+    }
+
+    @Override
+    public String obterDescricao() {
+        return "Seguro{" +
+                "id=" + id +
+                ", codigo='" + codigo + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 
     public String getCodigo() {
@@ -96,6 +109,18 @@ public class Seguro {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getTipoSeguro() {
+        return tipo;
+    }
+
+    public double getValorSeguro() {
+        return valor;
+    }
+
+    public boolean isAtivo() {
+        return "Ativo".equals(status);
     }
 
     @Override

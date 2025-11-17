@@ -101,6 +101,43 @@ public class Carro extends EntidadeBase {
         this.disponivel = disponivel;
     }
 
+    public void mostrarInfo() {
+        System.out.println("=== Informações do Carro ===");
+        System.out.println("ID: " + id);
+        System.out.println("Modelo: " + modelo);
+        System.out.println("Placa: " + placa);
+        System.out.println("Valor da Diária: R$ " + valorDiaria);
+        System.out.println("Cor: " + cor);
+        System.out.println("Combustível: " + tipoCombustivel);
+        System.out.println("Disponível: " + (disponivel ? "Sim" : "Não"));
+    }
+
+    public void atualizarValorDiaria(double novoValor) {
+        if (novoValor > 0) {
+            this.valorDiaria = novoValor;
+            System.out.println("Valor da diária atualizado para R$ " + novoValor);
+        } else {
+            System.out.println("Valor inválido!");
+        }
+    }
+
+    public void checarDisponibilidade() {
+        if (disponivel) {
+            System.out.println("Carro " + modelo + " está DISPONÍVEL para aluguel.");
+        } else {
+            System.out.println("Carro " + modelo + " NÃO está disponível.");
+        }
+    }
+
+    public void alugarCarro() {
+        if (disponivel) {
+            this.disponivel = false;
+            System.out.println("Carro " + modelo + " alugado com sucesso!");
+        } else {
+            System.out.println("Carro " + modelo + " já está alugado.");
+        }
+    }
+
     @Override
     public String toString() {
         return "Carro{" +

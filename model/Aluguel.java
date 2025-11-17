@@ -104,6 +104,18 @@ public class Aluguel extends EntidadeBase {
         this.confirmado = confirmado;
     }
 
+    public void criarAluguel() {
+        this.confirmado = true;
+        this.dataAluguel = LocalDate.now();
+        System.out.println("Aluguel criado com sucesso para " + 
+                          (cliente != null ? cliente.getNome() : "N/A"));
+    }
+
+    public void cancelarAluguel() {
+        this.confirmado = false;
+        System.out.println("Aluguel cancelado!");
+    }
+
     @Override
     public String toString() {
         return "Aluguel{" +

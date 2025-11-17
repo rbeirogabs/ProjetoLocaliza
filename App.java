@@ -1,6 +1,5 @@
 import model.*;
 import services.*;
-import repositories.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -18,6 +17,7 @@ public class App {
     private static Scanner scanner;
 
     public static void main(String[] args) {
+        scanner = new Scanner(System.in);
         inicializarDados();
         
         boolean continuar = true;
@@ -121,12 +121,13 @@ public class App {
         String combustivel = scanner.nextLine();
         
         Carro carro = new Carro(modelo, placa, valor, cor, combustivel);
-        carros.add(carro);
+        carroServico.cadastrar(carro);
         System.out.println("✓ Carro cadastrado com sucesso!");
     }
 
     private static void listarCarros() {
         System.out.println("\n=== LISTA DE CARROS ===");
+        ArrayList<Carro> carros = carroServico.listar();
         if (carros.isEmpty()) {
             System.out.println("Nenhum carro cadastrado.");
         } else {
@@ -139,7 +140,7 @@ public class App {
     private static void buscarCarro() {
         System.out.print("\nDigite a placa do carro: ");
         String placa = scanner.nextLine();
-        Carro carro = encontrarCarroPorPlaca(placa);
+        Carro carro = carroServico.buscarPorPlaca(placa);
         
         if (carro != null) {
             carro.mostrarInfo();
@@ -151,7 +152,7 @@ public class App {
     private static void atualizarValorDiaria() {
         System.out.print("\nDigite a placa do carro: ");
         String placa = scanner.nextLine();
-        Carro carro = encontrarCarroPorPlaca(placa);
+        Carro carro = carroServico.buscarPorPlaca(placa);
         
         if (carro != null) {
             System.out.print("Novo valor da diária: R$ ");
@@ -166,7 +167,7 @@ public class App {
     private static void verificarDisponibilidadeCarro() {
         System.out.print("\nDigite a placa do carro: ");
         String placa = scanner.nextLine();
-        Carro carro = encontrarCarroPorPlaca(placa);
+        Carro carro = carroServico.buscarPorPlaca(placa);
         
         if (carro != null) {
             carro.checarDisponibilidade();
@@ -212,12 +213,13 @@ public class App {
         String genero = scanner.nextLine();
         
         Cliente cliente = new Cliente(nome, cnh, cpf, telefone, email, genero);
-        clientes.add(cliente);
+        clienteServico.cadastrar(cliente);
         System.out.println("✓ Cliente cadastrado com sucesso!");
     }
 
     private static void listarClientes() {
         System.out.println("\n=== LISTA DE CLIENTES ===");
+        ArrayList<Cliente> clientes = clienteServico.listar();
         if (clientes.isEmpty()) {
             System.out.println("Nenhum cliente cadastrado.");
         } else {
@@ -230,7 +232,7 @@ public class App {
     private static void buscarCliente() {
         System.out.print("\nDigite o CPF do cliente: ");
         String cpf = scanner.nextLine();
-        Cliente cliente = encontrarClientePorCPF(cpf);
+        Cliente cliente = clienteServico.buscarPorCpf(cpf);
         
         if (cliente != null) {
             System.out.println(cliente);
@@ -266,7 +268,7 @@ public class App {
         listarClientes();
         System.out.print("Digite o CPF do cliente: ");
         String cpf = scanner.nextLine();
-        Cliente cliente = encontrarClientePorCPF(cpf);
+        Cliente cliente = clienteServico.buscarPorCpf(cpf);
         
         if (cliente == null) {
             System.out.println("Cliente não encontrado!");
@@ -276,7 +278,7 @@ public class App {
         listarCarrosDisponiveis();
         System.out.print("Digite a placa do carro: ");
         String placa = scanner.nextLine();
-        Carro carro = encontrarCarroPorPlaca(placa);
+        Carro carro = carroServico.buscarPorPlaca(placa);
         
         if (carro == null || !carro.isDisponivel()) {
             System.out.println("Carro não disponível!");
@@ -289,13 +291,14 @@ public class App {
         Aluguel aluguel = new Aluguel(cliente, carro, LocalDate.now(), local);
         aluguel.criarAluguel();
         carro.alugarCarro();
-        alugueis.add(aluguel);
+        aluguelServico.cadastrar(aluguel);
         
         System.out.println("✓ Aluguel criado com sucesso!");
     }
 
     private static void listarAlugueis() {
         System.out.println("\n=== LISTA DE ALUGUÉIS ===");
+        ArrayList<Aluguel> alugueis = aluguelServico.listar();
         if (alugueis.isEmpty()) {
             System.out.println("Nenhum aluguel registrado.");
         } else {
@@ -310,6 +313,7 @@ public class App {
         System.out.print("\nDigite o número do aluguel para cancelar: ");
         int index = lerOpcao() - 1;
         
+        ArrayList<Aluguel> alugueis = aluguelServico.listar();
         if (index >= 0 && index < alugueis.size()) {
             Aluguel aluguel = alugueis.get(index);
             aluguel.cancelarAluguel();
@@ -355,12 +359,13 @@ public class App {
         String telefone = scanner.nextLine();
         
         Funcionario funcionario = new Funcionario(nome, cpf, cargo, departamento, telefone);
-        funcionarios.add(funcionario);
+        funcionarioServico.cadastrar(funcionario);
         System.out.println("✓ Funcionário cadastrado!");
     }
 
     private static void listarFuncionarios() {
         System.out.println("\n=== LISTA DE FUNCIONÁRIOS ===");
+        ArrayList<Funcionario> funcionarios = funcionarioServico.listar();
         if (funcionarios.isEmpty()) {
             System.out.println("Nenhum funcionário cadastrado.");
         } else {
@@ -375,6 +380,7 @@ public class App {
         System.out.print("\nDigite o número do funcionário: ");
         int index = lerOpcao() - 1;
         
+        ArrayList<Funcionario> funcionarios = funcionarioServico.listar();
         if (index >= 0 && index < funcionarios.size()) {
             funcionarios.get(index).gerarRelatorio();
         } else {
@@ -415,12 +421,13 @@ public class App {
         double valor = Double.parseDouble(scanner.nextLine());
         
         Pagamento pagamento = new Pagamento(tipo, valor);
-        pagamentos.add(pagamento);
+        pagamentoServico.cadastrar(pagamento);
         System.out.println("✓ Pagamento criado!");
     }
 
     private static void listarPagamentos() {
         System.out.println("\n=== LISTA DE PAGAMENTOS ===");
+        ArrayList<Pagamento> pagamentos = pagamentoServico.listar();
         if (pagamentos.isEmpty()) {
             System.out.println("Nenhum pagamento registrado.");
         } else {
@@ -435,6 +442,7 @@ public class App {
         System.out.print("\nDigite o número do pagamento: ");
         int index = lerOpcao() - 1;
         
+        ArrayList<Pagamento> pagamentos = pagamentoServico.listar();
         if (index >= 0 && index < pagamentos.size()) {
             pagamentos.get(index).processarPagamento();
         } else {
@@ -447,6 +455,7 @@ public class App {
         System.out.print("\nDigite o número do pagamento: ");
         int index = lerOpcao() - 1;
         
+        ArrayList<Pagamento> pagamentos = pagamentoServico.listar();
         if (index >= 0 && index < pagamentos.size()) {
             pagamentos.get(index).estornarPagamento();
         } else {
@@ -481,7 +490,7 @@ public class App {
         listarCarros();
         System.out.print("Digite a placa do carro: ");
         String placa = scanner.nextLine();
-        Carro carro = encontrarCarroPorPlaca(placa);
+        Carro carro = carroServico.buscarPorPlaca(placa);
         
         if (carro == null) {
             System.out.println("Carro não encontrado!");
@@ -495,13 +504,14 @@ public class App {
         seguro.setValor(valor);
         seguro.setInicio(LocalDate.now());
         seguro.setTermino(LocalDate.now().plusYears(1));
-        seguros.add(seguro);
+        seguroServico.cadastrar(seguro);
         
         System.out.println("✓ Seguro criado!");
     }
 
     private static void listarSeguros() {
         System.out.println("\n=== LISTA DE SEGUROS ===");
+        ArrayList<Seguro> seguros = seguroServico.listar();
         if (seguros.isEmpty()) {
             System.out.println("Nenhum seguro cadastrado.");
         } else {
@@ -536,7 +546,7 @@ public class App {
         listarCarros();
         System.out.print("Digite a placa do carro: ");
         String placa = scanner.nextLine();
-        Carro carro = encontrarCarroPorPlaca(placa);
+        Carro carro = carroServico.buscarPorPlaca(placa);
         
         if (carro == null) {
             System.out.println("Carro não encontrado!");
@@ -547,7 +557,7 @@ public class App {
         String tipo = scanner.nextLine();
         
         Manutencao manutencao = new Manutencao(codigo, carro, tipo);
-        manutencoes.add(manutencao);
+        manutencaoServico.cadastrar(manutencao);
         carro.setDisponivel(false);
         
         System.out.println("✓ Manutenção agendada!");
@@ -555,6 +565,7 @@ public class App {
 
     private static void listarManutencoes() {
         System.out.println("\n=== LISTA DE MANUTENÇÕES ===");
+        ArrayList<Manutencao> manutencoes = manutencaoServico.listar();
         if (manutencoes.isEmpty()) {
             System.out.println("Nenhuma manutenção cadastrada.");
         } else {
@@ -568,85 +579,62 @@ public class App {
         System.out.println("\n--------------------------------------------");
         System.out.println("RELATÓRIO GERAL DO SISTEMA");
         System.out.println("--------------------------------------------");
-        System.out.println("Total de Carros: " + carros.size());
+        System.out.println("Total de Carros: " + carroServico.totalCarros());
         System.out.println("Carros Disponíveis: " + contarCarrosDisponiveis());
-        System.out.println("Total de Clientes: " + clientes.size());
-        System.out.println("Total de Aluguéis: " + alugueis.size());
+        System.out.println("Total de Clientes: " + clienteServico.totalClientes());
+        System.out.println("Total de Aluguéis: " + aluguelServico.totalAlugueis());
         System.out.println("Aluguéis Ativos: " + contarAlugueisAtivos());
-        System.out.println("Total de Funcionários: " + funcionarios.size());
-        System.out.println("Total de Pagamentos: " + pagamentos.size());
+        System.out.println("Total de Funcionários: " + funcionarioServico.totalFuncionarios());
+        System.out.println("Total de Pagamentos: " + pagamentoServico.totalPagamentos());
         System.out.println("Pagamentos Processados: " + contarPagamentosProcessados());
-        System.out.println("Total de Seguros: " + seguros.size());
-        System.out.println("Total de Manutenções: " + manutencoes.size());
+        System.out.println("Total de Seguros: " + seguroServico.totalSeguros());
+        System.out.println("Total de Manutenções: " + manutencaoServico.totalManutencoes());
     }
 
     private static void inicializarDados() {
-        // Carros de exemplo
-        carros.add(new Carro("Gol", "ABC-1234", 150.0, "Branco", "Flex"));
-        carros.add(new Carro("Civic", "XYZ-5678", 250.0, "Preto", "Gasolina"));
-        carros.add(new Carro("Onix", "DEF-9012", 180.0, "Prata", "Flex"));
+        carroServico = new CarroServico();
+        clienteServico = new ClienteServico();
+        aluguelServico = new AluguelServico();
+        funcionarioServico = new FuncionarioServico();
+        pagamentoServico = new PagamentoServico();
+        seguroServico = new SeguroServico();
+        manutencaoServico = new ManutencaoServico();
         
-        // Clientes de exemplo
-        clientes.add(new Cliente("João Silva", "12345678900", "11111111111", "11999999999", "joao@email.com", "M"));
-        clientes.add(new Cliente("Maria Santos", "98765432100", "22222222222", "11988888888", "maria@email.com", "F"));
+        carroServico.cadastrar(new Carro("Gol", "ABC-1234", 150.0, "Branco", "Flex"));
+        carroServico.cadastrar(new Carro("Civic", "XYZ-5678", 250.0, "Preto", "Gasolina"));
+        carroServico.cadastrar(new Carro("Onix", "DEF-9012", 180.0, "Prata", "Flex"));
         
-        // Funcionários de exemplo
-        funcionarios.add(new Funcionario("Carlos Oliveira", "55555555555", "Gerente", "Atendimento", "11977777777"));
+        clienteServico.cadastrar(new Cliente("João Silva", "11111111111", "12345678900", "11999999999", "joao@email.com", "M"));
+        clienteServico.cadastrar(new Cliente("Maria Santos", "22222222222", "98765432100", "11988888888", "maria@email.com", "F"));
+        
+        funcionarioServico.cadastrar(new Funcionario("Carlos Oliveira", "55555555555", "Gerente", "Atendimento", "11977777777"));
         
         System.out.println("✓ Sistema inicializado com dados de exemplo!");
     }
 
     private static void listarCarrosDisponiveis() {
         System.out.println("\n=== CARROS DISPONÍVEIS ===");
-        boolean temDisponiveis = false;
-        for (Carro c : carros) {
-            if (c.isDisponivel()) {
-                System.out.println("- " + c);
-                temDisponiveis = true;
-            }
-        }
-        if (!temDisponiveis) {
+        ArrayList<Carro> carros = carroServico.listarDisponiveis();
+        if (carros.isEmpty()) {
             System.out.println("Nenhum carro disponível no momento.");
-        }
-    }
-
-    private static Carro encontrarCarroPorPlaca(String placa) {
-        for (Carro c : carros) {
-            if (c.getPlaca().equalsIgnoreCase(placa)) {
-                return c;
+        } else {
+            for (Carro c : carros) {
+                System.out.println("- " + c);
             }
         }
-        return null;
-    }
-
-    private static Cliente encontrarClientePorCPF(String cpf) {
-        for (Cliente c : clientes) {
-            if (c.getCpf().equals(cpf)) {
-                return c;
-            }
-        }
-        return null;
     }
 
     private static int contarCarrosDisponiveis() {
-        int count = 0;
-        for (Carro c : carros) {
-            if (c.isDisponivel()) count++;
-        }
-        return count;
+        return carroServico.totalCarrosDisponiveis();
     }
 
     private static int contarAlugueisAtivos() {
-        int count = 0;
-        for (Aluguel a : alugueis) {
-            if (a.isConfirmado()) count++;
-        }
-        return count;
+        return aluguelServico.totalAlugueisConfirmados();
     }
 
     private static int contarPagamentosProcessados() {
         int count = 0;
-        for (Pagamento p : pagamentos) {
+        for (Pagamento p : pagamentoServico.listar()) {
             if (p.getStatus().equals("Pago")) count++;
         }
         return count;

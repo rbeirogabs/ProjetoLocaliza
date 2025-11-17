@@ -16,10 +16,8 @@ public abstract class EntidadeBase {
         this.id = id;
     }
 
-    // Método abstrato que deve ser implementado pelas subclasses
     public abstract String obterDescricao();
 
-    // Métodos concretos com sobrecarga
     public void exibir() {
         System.out.println(obterDescricao());
     }

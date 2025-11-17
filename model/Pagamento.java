@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDate;
 
-public class Pagamento {
+public class Pagamento extends EntidadeBase {
 
     private String tipo;
     private double valor;
@@ -10,9 +10,11 @@ public class Pagamento {
     private String status;
 
     public Pagamento() {
+        super();
     }
 
     public Pagamento(String tipo, double valor) {
+        super();
         this.tipo = tipo;
         this.valor = valor;
         this.dataPagamento = LocalDate.now();
@@ -20,10 +22,21 @@ public class Pagamento {
     }
 
     public Pagamento(String tipo, double valor, LocalDate dataPagamento, String status) {
+        super();
         this.tipo = tipo;
         this.valor = valor;
         this.dataPagamento = dataPagamento;
         this.status = status;
+    }
+
+    @Override
+    public String obterDescricao() {
+        return "Pagamento{" +
+                "id=" + id +
+                ", tipo='" + tipo + '\'' +
+                ", valor=" + valor +
+                ", status='" + status + '\'' +
+                '}';
     }
 
     public String getTipo() {
@@ -70,6 +83,10 @@ public class Pagamento {
 
     public void gerarRecibo() {
         System.out.println("Recibo: Tipo " + tipo + ", Valor R$ " + valor + ", Status: " + status);
+    }
+
+    public boolean isConfirmado() {
+        return "Pago".equals(status);
     }
 
     @Override

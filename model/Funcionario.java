@@ -98,6 +98,17 @@ public class Funcionario extends EntidadeBase {
         this.salario = salario;
     }
 
+    public void gerarRelatorio() {
+        System.out.println("=== Relatório do Funcionário ===");
+        System.out.println("ID: " + id);
+        System.out.println("Nome: " + nome);
+        System.out.println("CPF: " + cpf);
+        System.out.println("Cargo: " + cargo);
+        System.out.println("Departamento: " + departamento);
+        System.out.println("Telefone: " + telefone);
+        System.out.println("Salário: R$ " + salario);
+    }
+
     @Override
     public String toString() {
         return "Funcionario{" +

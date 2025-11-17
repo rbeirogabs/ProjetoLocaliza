@@ -43,7 +43,7 @@ public class PagamentoServico implements IServico<Pagamento> {
 
     @Override
     public boolean validar(Pagamento pagamento) {
-        if (pagamento.getAluguel() == null) {
+        if (pagamento.getTipo() == null || pagamento.getTipo().trim().isEmpty()) {
             return false;
         }
         if (pagamento.getValor() <= 0) {

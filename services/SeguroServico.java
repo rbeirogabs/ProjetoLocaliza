@@ -43,7 +43,7 @@ public class SeguroServico implements IServico<Seguro> {
 
     @Override
     public boolean validar(Seguro seguro) {
-        if (seguro.getAluguel() == null) {
+        if (seguro.getCarro() == null) {
             return false;
         }
         if (seguro.getTipoSeguro() == null || seguro.getTipoSeguro().trim().isEmpty()) {
